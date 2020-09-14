@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ContractEntity } from './../../contract/entity/contract.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('client')
 export class ClientEntity {
@@ -16,4 +17,7 @@ export class ClientEntity {
 
     @Column({name: 'email'})
     public email: string;
+
+    @OneToMany(type => ContractEntity, contract => contract.client)
+    public contract: ContractEntity[] | number[];
 }

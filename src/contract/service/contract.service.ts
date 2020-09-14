@@ -17,7 +17,7 @@ export class ContractService {
     }
 
     public getSingle(contractCode: number): Promise<ContractEntity> {
-        return this.contractRepository.findOne(contractCode);
+        return this.contractRepository.findOne(contractCode, {relations: ['client']});
     }
 
     public getAll(): Promise<ContractEntity[]> {

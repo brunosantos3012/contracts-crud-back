@@ -19,7 +19,7 @@ export class ClientService {
     }
 
     public getSingle(clientCode: number): Promise<ClientEntity> {
-        return this.clientRepository.findOne(clientCode)
+        return this.clientRepository.findOne(clientCode, {relations: ['contract']})
     }
 
     public update(clientCode: number, request: ClientEntity): Promise<UpdateResult> {

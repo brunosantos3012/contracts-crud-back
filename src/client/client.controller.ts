@@ -1,7 +1,8 @@
+import { JwtAuthGuard } from './../auth/jwt/jwt-auth.guard';
 import { ClientEntity } from './entity/client.entity';
 import { ClientService } from './service/client.service';
 import { ClientDto } from './dto/client.dto';
-import { Body, Controller, Delete, Get, HttpCode, InternalServerErrorException, NotFoundException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, InternalServerErrorException, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UpdateResult, DeleteResult, Not } from 'typeorm';
 
 @Controller('client')
@@ -10,6 +11,7 @@ export class ClientController {
         private readonly clientService: ClientService
     ) { }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
     public async insertClient(@Body() request: ClientDto): Promise<number> {
         const client: ClientEntity = await this.clientService.insert(request)
@@ -19,6 +21,7 @@ export class ClientController {
         throw new InternalServerErrorException('Não foi possível cadastrar o cliente.');
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
     public async getAll(): Promise<ClientDto[]> {
         const clients: ClientDto[] = await this.clientService.getAll();
@@ -37,6 +40,7 @@ export class ClientController {
         return client;
     }
 
+    @UseGuards(JwtAuthGuard)
     @Patch(':code')
     @HttpCode(204)
     public async update(@Param('code') clientCode: number, @Body() request: ClientDto): Promise<void> {
@@ -46,6 +50,7 @@ export class ClientController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete(':code')
     @HttpCode(204)
     public async delete(@Param('code') clientCode: number): Promise<void> {

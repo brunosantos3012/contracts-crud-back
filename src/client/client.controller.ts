@@ -16,14 +16,14 @@ export class ClientController {
         if (client) {
             return client.code;
         }
-        throw new InternalServerErrorException('Não foi possível cadastrar o cliente');
+        throw new InternalServerErrorException('Não foi possível cadastrar o cliente.');
     }
 
     @Get()
     public async getAll(): Promise<ClientDto[]> {
         const clients: ClientDto[] = await this.clientService.getAll();
         if (!clients.length) {
-            throw new NotFoundException('Nenhum cliente encontrado');
+            throw new NotFoundException('Nenhum cliente encontrado.');
         }
         return clients;
     }
@@ -32,7 +32,7 @@ export class ClientController {
     public async getSingle(@Param('code') clientCode: number): Promise<ClientDto> {
         const client: ClientDto = await this.clientService.getSingle(clientCode);
         if (!client) {
-            throw new NotFoundException('Cliente não encontrado');
+            throw new NotFoundException('Cliente não encontrado.');
         }
         return client;
     }
@@ -42,7 +42,7 @@ export class ClientController {
     public async update(@Param('code') clientCode: number, @Body() request: ClientDto): Promise<void> {
         const result: UpdateResult = await this.clientService.update(clientCode, request);
         if (!result.affected) {
-            throw new NotFoundException('Cliente não encontrado');
+            throw new NotFoundException('Cliente não encontrado.');
         }
     }
 
@@ -51,7 +51,7 @@ export class ClientController {
     public async delete(@Param('code') clientCode: number): Promise<void> {
         const result: DeleteResult = await this.clientService.delete(clientCode)
         if(!result.affected) {
-            throw new NotFoundException('Cliente não encontrado')
+            throw new NotFoundException('Cliente não encontrado.')
         }
     }
 }

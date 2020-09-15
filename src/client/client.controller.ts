@@ -2,7 +2,7 @@ import { JwtAuthGuard } from './../auth/jwt/jwt-auth.guard';
 import { ClientEntity } from './entity/client.entity';
 import { ClientService } from './service/client.service';
 import { ClientDto } from './dto/client.dto';
-import { Body, Controller, Delete, Get, HttpCode, InternalServerErrorException, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, InternalServerErrorException, NotFoundException, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { UpdateResult, DeleteResult, Not } from 'typeorm';
 
 @Controller('client')
@@ -23,8 +23,8 @@ export class ClientController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    public async getAll(): Promise<ClientDto[]> {
-        const clients: ClientDto[] = await this.clientService.getAll();
+    public async getAll(@Query() query: ClientDto): Promise<ClientDto[]> {
+        const clients: ClientDto[] = await this.clientService.getAll(query);
         if (!clients.length) {
             throw new NotFoundException('Nenhum cliente encontrado.');
         }

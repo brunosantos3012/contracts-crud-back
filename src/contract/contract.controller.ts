@@ -1,7 +1,7 @@
 import { JwtAuthGuard } from './../auth/jwt/jwt-auth.guard';
 import { ContractDto } from './dto/contract.dto';
 import { ContractService } from './service/contract.service';
-import { Controller, Post, Body, InternalServerErrorException, Get, Param, NotFoundException, Patch, HttpStatus, HttpCode, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, InternalServerErrorException, Get, Param, NotFoundException, Patch, HttpStatus, HttpCode, Delete, UseGuards, Query } from '@nestjs/common';
 import { Not, UpdateResult, DeleteResult } from 'typeorm';
 
 @Controller('contract')
@@ -32,8 +32,8 @@ export class ContractController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    public async getAll(): Promise<ContractDto[]> {
-        const contracts: ContractDto[] = await this.contractService.getAll();
+    public async getAll(@Query() request: ContractDto): Promise<ContractDto[]> {
+        const contracts: ContractDto[] = await this.contractService.getAll(request);
         if (!contracts.length) {
             throw new NotFoundException('Nenhum contrato encontrado.');
         }

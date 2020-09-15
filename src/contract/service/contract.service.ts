@@ -20,8 +20,8 @@ export class ContractService {
         return this.contractRepository.findOne(contractCode, {relations: ['client']});
     }
 
-    public getAll(): Promise<ContractEntity[]> {
-        return this.contractRepository.find();
+    public getAll(query: ContractEntity): Promise<ContractEntity[]> {
+        return this.contractRepository.find({where: query});
     }
 
     public update(contractCode: number, request: ContractDto): Promise<UpdateResult> {

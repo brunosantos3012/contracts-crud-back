@@ -14,8 +14,8 @@ export class ClientService {
         return this.clientRepository.save(request);
     }
 
-    public getAll(): Promise<ClientEntity[]> {
-        return this.clientRepository.find();
+    public getAll(query: ClientEntity): Promise<ClientEntity[]> {
+        return this.clientRepository.find({where: query});
     }
 
     public getSingle(clientCode: number): Promise<ClientEntity> {
